@@ -3,7 +3,6 @@ name: TrendRadar Crawler
 on:
   workflow_dispatch:
   schedule:
-    # 这里的 00 00 和 00 12 对应北京时间 08:00 和 20:00
     - cron: '0 0,12 * * *'
 
 jobs:
@@ -21,9 +20,20 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          # 自动寻找 requirements.txt 并安装
+          find . -name "requirements.txt" -exec pip install -r {} +
 
       - name: Run Crawler
-        run: python main.py
+        run: |
+          # 核心修复：自动寻找 main.py 所在的目录并切换过去运行
+          MAIN_PATH=$(find . -name "main.py" | head -n 1)
+          if [ -z "$MAIN_PATH" ]; then
+            echo "错误：在仓库中找不到 main.py 文件！请确认文件是否存在。"
+            exit 1
+          fi
+          MAIN_DIR=$(dirname "$MAIN_PATH")
+          echo "找到 main.py 位于: $MAIN_PATH"
+          cd "$MAIN_DIR"
+          python main.py
         env:
           PYTHONPATH: .
