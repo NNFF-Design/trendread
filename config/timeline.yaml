@@ -1,30 +1,21 @@
 presets:
   custom:
-    name: "AI健康财经简报"
-    description: "每日早晚八点准时推送"
+    name: "测试推送"
+    description: "全天候测试模式"
     default:
       collect: true
-      analyze: false
-      push: false
-      report_mode: "current"
-      once:
-        push: true
+      analyze: true
+      push: true
+      report_mode: "full"
     periods:
-      morning_push:
-        name: "早间简报"
-        start: "08:00"
-        end: "08:59"
-        analyze: true
-        push: true
-      evening_push:
-        name: "晚间简报"
-        start: "20:00"
-        end: "20:59"
-        analyze: true
+      test_all_day:
+        name: "全天时段"
+        start: "00:00"
+        end: "23:59"
         push: true
     day_plans:
       daily:
-        periods: ["morning_push", "evening_push"]
+        periods: ["test_all_day"]
     week_map:
       1: "daily"
       2: "daily"
