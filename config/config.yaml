@@ -4,9 +4,9 @@ app:
 
 schedule:
   enabled: true
-  preset: "custom" 
+  preset: "always_on" # 【已修改】测试时使用 always_on，确保立即触发推送
 
-# Moonshot AI (Kimi) 接入
+# Moonshot AI (Kimi) 配置
 ai:
   enabled: true
   provider: "openai"
@@ -16,7 +16,6 @@ ai:
 
 platforms:
   enabled: true
-  # 开启全平台数据源
   sources:
     - id: "weibo"
     - id: "toutiao"
@@ -30,13 +29,13 @@ platforms:
 
 report:
   mode: "current"
-  display_mode: "keyword" # AI总结模式下不显示杂乱链接
+  display_mode: "keyword" # 隐藏链接，通过 AI 总结呈现
 
 display:
   regions:
     hotlist: true
     rss: true
-    ai_analysis: true
+    ai_analysis: true # 开启 AI 总结
 
 notification:
   enabled: true
