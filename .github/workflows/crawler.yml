@@ -1,8 +1,9 @@
-name: TrendRadar Crawler Debug
+name: TrendRadar Crawler
 
 on:
   workflow_dispatch:
   schedule:
+    # 00:00 和 12:00 UTC 对应北京时间 08:00 和 20:00
     - cron: '0 0,12 * * *'
 
 jobs:
@@ -12,12 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Show Files Structure
-        run: |
-          echo "--- 正在列出仓库所有文件，寻找 main.py ---"
-          find . -maxdepth 3 -not -path '*/.*'
-          echo "------------------------------------------"
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -25,24 +20,16 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # 尝试安装依赖，如果找不到 requirements 也不报错
-          find . -name "requirements.txt" -exec pip install -r {} + || echo "No requirements found"
-
-      - name: Force Run
-        run: |
-          # 尝试直接运行
-          if [ -f "main.py" ]; then
-            python main.py
-          elif [ -f "TrendRadar/main.py" ]; then
-            cd TrendRadar && python main.py
-          else
-            # 如果还是找不到，尝试搜索所有 .py 文件并运行包含 "main" 的那个
-            POTENTIAL_MAIN=$(find . -name "*.py" | grep "main" | head -n 1)
-            if [ ! -z "$POTENTIAL_MAIN" ]; then
-              cd $(dirname "$POTENTIAL_MAIN")
-              python $(basename "$POTENTIAL_MAIN")
-            else
-              echo "错误：真的找不到任何类似 main.py 的文件！"
-              exit 1
-            fi
+          python -m pip install --upgrade pip
+          if [ -f "requirements.txt" ]; then
+            pip install -r requirements.txt
           fi
+
+      - name: Run TrendRadar
+        run: |
+          # 针对新版 v2.0+ 的标准运行方式
+          # 设置 PYTHONPATH 确保系统能识别 trendradar 模块
+          export PYTHONPATH=$PYTHONPATH:.
+          python -m trendradar
+        env:
+          PYTHONPATH: .
