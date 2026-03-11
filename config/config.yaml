@@ -1,9 +1,10 @@
 app:
   timezone: "Asia/Shanghai"
+  show_version_update: true
 
 schedule:
   enabled: true
-  preset: "custom" # 必须用这个词，不能用 always_on
+  preset: "custom"
 
 ai:
   enabled: true
@@ -31,7 +32,6 @@ display:
     rss: true
     ai_analysis: true
 
-# 注意：下面的缩进必须非常精确，每层是 2 个空格
 notification:
   enabled: true
   default: "wechat_work"
