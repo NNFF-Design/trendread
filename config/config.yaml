@@ -4,9 +4,9 @@ app:
 
 schedule:
   enabled: true
-  preset: "always_on" # 测试阶段强制开启，无视时间限制
+  preset: "always_on" # 强制开启：跳过所有时间判断，运行即推送
 
-# Moonshot AI (Kimi) 接入
+# Moonshot AI (Kimi) 正确配置
 ai:
   enabled: true
   provider: "openai"
@@ -19,26 +19,23 @@ platforms:
   sources:
     - id: "weibo"
     - id: "toutiao"
-    - id: "zhihu"
     - id: "thepaper"
     - id: "wallstreetcn-hot"
     - id: "cls-hot"
-    - id: "ifeng"
-    - id: "douyin"
-    - id: "36kr"
 
 report:
-  mode: "current"
+  mode: "full"         # 强制全量：确保哪怕没新消息，也会把热榜推给你，用于测试
   display_mode: "keyword" 
 
 display:
   regions:
     hotlist: true
     rss: true
-    ai_analysis: true # 开启 AI 总结推送
+    ai_analysis: true
 
 notification:
   enabled: true
   default: "wechat_work"
   wechat_work:
+    # 你的企业微信机器人地址
     webhook_url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=628381f1-4d65-4b91-8f32-14a3f6dabfbe"
