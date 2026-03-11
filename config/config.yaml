@@ -1,16 +1,11 @@
-# ═══════════════════════════════════════════════════════════════
-#                    TrendRadar 配置文件 (定制版)
-# ═══════════════════════════════════════════════════════════════
-
 app:
   timezone: "Asia/Shanghai"
   show_version_update: true
 
 schedule:
   enabled: true
-  preset: "custom"  # 强制使用自定义时间线
+  preset: "custom"
 
-# 数据源全部开启
 platforms:
   enabled: true
   sources:
@@ -30,23 +25,16 @@ platforms:
       name: "凤凰网"
     - id: "douyin"
       name: "抖音"
-    - id: "36kr"
-      name: "36氪"
-    - id: "v2ex"
-      name: "V2EX"
-    - id: "hacker-news"
-      name: "Hacker News"
 
 rss:
   enabled: true
   feeds:
     - id: "hacker-news-rss"
-      name: "HN Frontpage"
+      name: "HN"
       url: "https://hnrss.org/frontpage"
 
 report:
   mode: "current"
-  # 使用 keyword 模式以最大程度减少原始链接的直接干扰
   display_mode: "keyword" 
 
 display:
@@ -58,9 +46,10 @@ display:
     rss: true
     new_items: false
     standalone: false
-    # 【指令修改】彻底关闭 AI 总结
     ai_analysis: false 
 
 notification:
   enabled: true
-  # 注意：请在这里下方配置您的具体推送渠道（Feishu/Bark等）的 Webhook
+  # 请务必检查下方飞书/钉钉的缩进，必须比 notification 多两个空格
+  feishu:
+    webhook_url: "这里填你的URL"
