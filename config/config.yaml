@@ -1,9 +1,18 @@
 app:
   timezone: "Asia/Shanghai"
+  show_version_update: true
 
 schedule:
   enabled: true
   preset: "custom" 
+
+# Moonshot AI (Kimi) 接入
+ai:
+  enabled: true
+  provider: "openai"
+  base_url: "https://api.moonshot.cn/v1"
+  api_key: "sk-5fEyovRIVFngg3CNyvR0cF5ptCSx70ZyFsWgMdtIS7slfjBy"
+  model: "moonshot-v1-8k"
 
 platforms:
   enabled: true
@@ -19,27 +28,18 @@ platforms:
     - id: "douyin"
     - id: "36kr"
 
-# AI 设置：接入 Moonshot (Kimi)
-ai:
-  enabled: true
-  provider: "Moonshot" # Moonshot 兼容 OpenAI 格式
-  base_url: "https://api.moonshot.cn/v1"
-  api_key: "sk-5fEyovRIVFngg3CNyvR0cF5ptCSx70ZyFsWgMdtIS7slfjBy"
-  model: "moonshot-v1-8k"
-
 report:
   mode: "current"
-  display_mode: "keyword" # 隐藏链接，通过 AI 总结呈现
+  display_mode: "keyword" # AI总结模式下不显示杂乱链接
 
 display:
   regions:
     hotlist: true
     rss: true
-    ai_analysis: true  # 重新开启 AI 分析
+    ai_analysis: true
 
 notification:
   enabled: true
   default: "wechat_work"
   wechat_work:
-    # 你的企业微信 Webhook
     webhook_url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=628381f1-4d65-4b91-8f32-14a3f6dabfbe"
