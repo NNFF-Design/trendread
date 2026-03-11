@@ -1,21 +1,22 @@
 presets:
   custom:
-    name: "测试推送"
-    description: "全天候测试模式"
+    name: "全天测试推送"
+    description: "当前用于立即验证推送功能"
+    # 必须包含 default 字段
     default:
       collect: true
       analyze: true
       push: true
       report_mode: "full"
     periods:
-      test_all_day:
-        name: "全天时段"
+      all_day:
+        name: "全天候"
         start: "00:00"
         end: "23:59"
         push: true
     day_plans:
       daily:
-        periods: ["test_all_day"]
+        periods: ["all_day"]
     week_map:
       1: "daily"
       2: "daily"
