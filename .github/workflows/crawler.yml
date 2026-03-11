@@ -6,7 +6,7 @@ on:
     - cron: '0 0,12 * * *'
 
 env:
-  # 彻底消除 Node.js 20 警告
+  # 彻底消除 Node.js 警告
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
@@ -29,7 +29,6 @@ jobs:
 
       - name: Run TrendRadar
         run: |
-          # 确保在当前目录下寻找模块
           export PYTHONPATH=$PYTHONPATH:.
           python -m trendradar
         env:
