@@ -1,55 +1,34 @@
 app:
   timezone: "Asia/Shanghai"
-  show_version_update: true
 
 schedule:
   enabled: true
-  preset: "custom"
+  preset: "always_on" # 重点：这里改回 always_on，让 crawler.yml 决定时间
 
 platforms:
   enabled: true
   sources:
     - id: "weibo"
-      name: "微博"
     - id: "toutiao"
-      name: "今日头条"
     - id: "zhihu"
-      name: "知乎"
     - id: "thepaper"
-      name: "澎湃新闻"
     - id: "wallstreetcn-hot"
-      name: "华尔街见闻"
     - id: "cls-hot"
-      name: "财联社热门"
     - id: "ifeng"
-      name: "凤凰网"
     - id: "douyin"
-      name: "抖音"
-
-rss:
-  enabled: true
-  feeds:
-    - id: "hacker-news-rss"
-      name: "HN"
-      url: "https://hnrss.org/frontpage"
 
 report:
-  mode: "current"
-  display_mode: "keyword" 
+  mode: "full"         # 第一次运行建议用 full，确保一定有东西出
+  display_mode: "keyword"
 
 display:
-  region_order:
-    - hotlist
-    - rss
   regions:
     hotlist: true
     rss: true
-    new_items: false
-    standalone: false
-    ai_analysis: false 
+    ai_analysis: false # 按照要求关闭 AI
 
 notification:
   enabled: true
-  # 请务必检查下方飞书/钉钉的缩进，必须比 notification 多两个空格
+  # 请在此处下方正确缩进填写您的 Webhook
   feishu:
-    webhook_url: "这里填你的URL"
+    webhook_url: "这里填写你的URL"
