@@ -1,4 +1,4 @@
-name: TrendRadar Crawler
+name: TrendRadar Crawler Debug
 
 on:
   workflow_dispatch:
@@ -12,6 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Show Files Structure
+        run: |
+          echo "--- 正在列出仓库所有文件，寻找 main.py ---"
+          find . -maxdepth 3 -not -path '*/.*'
+          echo "------------------------------------------"
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -19,21 +25,24 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          # 自动寻找 requirements.txt 并安装
-          find . -name "requirements.txt" -exec pip install -r {} +
+          # 尝试安装依赖，如果找不到 requirements 也不报错
+          find . -name "requirements.txt" -exec pip install -r {} + || echo "No requirements found"
 
-      - name: Run Crawler
+      - name: Force Run
         run: |
-          # 核心修复：自动寻找 main.py 所在的目录并切换过去运行
-          MAIN_PATH=$(find . -name "main.py" | head -n 1)
-          if [ -z "$MAIN_PATH" ]; then
-            echo "错误：在仓库中找不到 main.py 文件！请确认文件是否存在。"
-            exit 1
+          # 尝试直接运行
+          if [ -f "main.py" ]; then
+            python main.py
+          elif [ -f "TrendRadar/main.py" ]; then
+            cd TrendRadar && python main.py
+          else
+            # 如果还是找不到，尝试搜索所有 .py 文件并运行包含 "main" 的那个
+            POTENTIAL_MAIN=$(find . -name "*.py" | grep "main" | head -n 1)
+            if [ ! -z "$POTENTIAL_MAIN" ]; then
+              cd $(dirname "$POTENTIAL_MAIN")
+              python $(basename "$POTENTIAL_MAIN")
+            else
+              echo "错误：真的找不到任何类似 main.py 的文件！"
+              exit 1
+            fi
           fi
-          MAIN_DIR=$(dirname "$MAIN_PATH")
-          echo "找到 main.py 位于: $MAIN_PATH"
-          cd "$MAIN_DIR"
-          python main.py
-        env:
-          PYTHONPATH: .
