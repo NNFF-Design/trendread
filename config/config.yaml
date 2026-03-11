@@ -4,9 +4,9 @@ app:
 
 schedule:
   enabled: true
-  preset: "always_on" # 【已修改】测试时使用 always_on，确保立即触发推送
+  preset: "always_on" # 测试阶段强制开启，无视时间限制
 
-# Moonshot AI (Kimi) 配置
+# Moonshot AI (Kimi) 接入
 ai:
   enabled: true
   provider: "openai"
@@ -29,13 +29,13 @@ platforms:
 
 report:
   mode: "current"
-  display_mode: "keyword" # 隐藏链接，通过 AI 总结呈现
+  display_mode: "keyword" 
 
 display:
   regions:
     hotlist: true
     rss: true
-    ai_analysis: true # 开启 AI 总结
+    ai_analysis: true # 开启 AI 总结推送
 
 notification:
   enabled: true
